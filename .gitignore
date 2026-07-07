@@ -1,0 +1,16 @@
+# Ambiente virtual
+.venv/
+
+# Base de dados
+*.db
+
+# Ficheiros Python compilados
+__pycache__/
+*.pyc
+
+# Ficheiros do PyCharm
+.idea/
+
+# Ficheiros do sistema
+.DS_Store
+Thumbs.db

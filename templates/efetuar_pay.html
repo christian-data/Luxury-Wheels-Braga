@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Wheels - Pagamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=14">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <nav class="navbar-custom">
+        <a class="brand-logo" href="{{ url_for('login') }}">
+            <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+        </a>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('car_list') }}">Carros</a>
+            <a href="{{ url_for('login') }}">Iniciar Sessão</a>
+            <a href="{{ url_for('register') }}">Registar-se</a>
+            <a href="{{ url_for('minhas_reservas') }}">As Minhas Reservas</a>
+            <a href="{{ url_for('contacto') }}">Contacte-nos</a>
+        </div>
+    </nav>
+
+    <!-- CABEÇALHO DA PÁGINA -->
+    <header class="hero-short-section" style="background-image: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), url('{{ url_for('static', filename='imagens/background.jpg') }}');">
+        <div class="hero-short-content">
+            <h1>Pagamento</h1>
+            <div class="breadcrumb-custom">
+                <a href="{{ url_for('index') }}">Início</a>
+                <span class="separator">&gt;</span>
+                <a href="{{ url_for('car_list') }}">Lista de Carros</a>
+                <span class="separator">&gt;</span>
+                <span class="active-page">Pagamento</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="pay-container">
+        <div class="pay-layout">
+
+            <!-- COLUNA ESQUERDA: FORMULÁRIO -->
+            <section class="pay-form-section">
+
+                <h2 class="pay-section-title">Pagamento</h2>
+
+                <div class="card-icons">
+                    <div class="card-icon visa">VISA</div>
+                    <div class="card-icon mastercard">
+                        <span class="mc-left"></span>
+                        <span class="mc-right"></span>
+                    </div>
+                    <div class="card-icon amex">AMEX</div>
+                </div>
+
+                <div class="pay-notice">
+                    <p><strong style="color: #d90414;">INFORMAÇÃO IMPORTANTE:</strong></p>
+                    <p>Seleciona o cartão de pagamento que pretendes usar. Esse cartão tem de estar no nome do condutor principal e isso será verificado ao balcão. Apesar de aceitarmos cartões pré-pagos para pagamentos online, tem de ser fornecido um cartão suplementar não pré-pago no momento da recolha.</p>
+                </div>
+
+                <form action="{{ url_for('confirmar_pagamento') }}" method="POST">
+
+                    <div class="pay-form-row">
+                        <div class="pay-input-group">
+                            <label for="numero_cartao">Número do cartão de pagamento *</label>
+                            <input type="text" id="numero_cartao" name="numero_cartao"
+                                   placeholder="0000 0000 0000 0000" maxlength="19" required>
+                        </div>
+                        <div class="pay-input-group">
+                            <label for="nome_cartao">Nome no cartão *</label>
+                            <input type="text" id="nome_cartao" name="nome_cartao"
+                                   placeholder="Nome completo" required>
+                        </div>
+                    </div>
+
+                    <div class="pay-form-row">
+                        <div class="pay-input-group">
+                            <label>Data de validade *</label>
+                            <div class="expiry-row">
+                                <select name="mes_validade" required>
+                                    <option value="">MM</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <select name="ano_validade" required>
+                                    <option value="">AAAA</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2027">2027</option>
+                                    <option value="2028">2028</option>
+                                    <option value="2029">2029</option>
+                                    <option value="2030">2030</option>
+                                    <option value="2031">2031</option>
+                                    <option value="2032">2032</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pay-input-group">
+                            <label for="cvv">Código de segurança CVV * <span class="cvv-help" title="3 dígitos no verso do cartão">?</span></label>
+                            <input type="text" id="cvv" name="cvv"
+                                   placeholder="000" maxlength="4" required>
+                        </div>
+                    </div>
+
+                    <p class="privacy-link">Por favor, consulte a nossa <a href="#">Política de Privacidade</a></p>
+
+                    <div class="terms-section">
+                        <h3>Termos e Condições *</h3>
+                        <div class="checkbox-group-custom">
+                            <input type="checkbox" id="aceito_reserva" name="aceito_reserva" required>
+                            <label for="aceito_reserva">Li e aceito as <a href="#" style="color: #d90414;">Condições de Reserva</a></label>
+                        </div>
+                        <p class="terms-note">
+                            Lê também as <a href="#" style="color: #d90414;">Condições Gerais de Aluguer</a> que contêm informações importantes sobre o teu aluguer.
+                        </p>
+                    </div>
+                    <!-- Campos hidden para passar os dados da reserva -->
+                        <input type="hidden" name="carro_selecionado" value="{{ carro_selecionado if carro_selecionado else '' }}">
+                        <input type="hidden" name="local_retirada" value="{{ local_retirada if local_retirada else '' }}">
+                        <input type="hidden" name="local_devolucao" value="{{ local_devolucao if local_devolucao else '' }}">
+                        <input type="hidden" name="data_retirada" value="{{ data_retirada if data_retirada else '' }}">
+                        <input type="hidden" name="hora_retirada" value="{{ hora_retirada if hora_retirada else '' }}">
+                        <input type="hidden" name="data_devolucao" value="{{ data_devolucao if data_devolucao else '' }}">
+                        <input type="hidden" name="hora_devolucao" value="{{ hora_devolucao if hora_devolucao else '' }}">
+                        <input type="hidden" name="dias" value="{{ dias if dias else '' }}">
+                        <input type="hidden" name="preco_dia" value="{{ preco_dia if preco_dia else '' }}">
+                        <input type="hidden" name="total" value="{{ total if total else '' }}">
+                    <button type="submit" class="btn-pay-confirm">
+                        Confirma a Tua Reserva e Paga Agora
+                    </button>
+
+                </form>
+            </section>
+
+            <!-- COLUNA DIREITA: RESUMO -->
+            <aside class="pay-summary">
+                <h3 class="summary-title">Resumo da Reserva</h3>
+                <div class="red-divider" style="margin: 0 0 20px 0;"></div>
+                <div class="summary-item">
+                    <span class="summary-label">🚗 Veículo</span>
+                    <span class="summary-value">{{ carro_selecionado if carro_selecionado else '—' }}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">📍 Levantamento</span>
+                    <span class="summary-value">{{ local_retirada if local_retirada else '—' }}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">📅 Data Levantamento</span>
+                    <span class="summary-value">{{ data_retirada if data_retirada else '—' }} {{ hora_retirada if hora_retirada else '' }}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">🏁 Entrega</span>
+                    <span class="summary-value">{{ local_devolucao if local_devolucao else '—' }}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">📅 Data Entrega</span>
+                    <span class="summary-value">{{ data_devolucao if data_devolucao else '—' }} {{ hora_devolucao if hora_devolucao else '' }}</span>
+                </div>
+                <div class="summary-total">
+                    <span>Total</span>
+                    <span class="total-value">{{ total if total else 'A calcular' }}€</span>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="footer-section">
+        <div class="footer-container">
+            <div class="footer-column footer-about">
+                <div class="footer-logo">
+                    <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+                </div>
+                <p>Grandes ofertas e o melhor serviço desde 1977.
+                    Obtenha seu orçamento para o aluguer de vários veículos de diversas marcas e modelos.
+                    Aluguer rápido, fácil e seguro.
+                    Apoio ao cliente em mais de 30 países.
+                    Cancelamento gratuíto.</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">G+</a>
+                </div>
+            </div>
+            <div class="footer-column footer-contact">
+                <h3>Contacte-Nos</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📍</span>
+                        <p>Braga, Portugal</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">✉️</span>
+                        <p>linkedin.com/in/christian-de-oliveira-aaa44034b</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📞</span>
+                        <p>+351 933 021 041</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

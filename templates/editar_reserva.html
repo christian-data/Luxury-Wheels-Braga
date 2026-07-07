@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Wheels - Editar Reserva</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=16">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <nav class="navbar-custom">
+        <a class="brand-logo" href="{{ url_for('login') }}">
+            <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+        </a>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('car_list') }}">Carros</a>
+            <a href="{{ url_for('login') }}">Iniciar Sessão</a>
+            <a href="{{ url_for('register') }}">Registar-se</a>
+            <a href="{{ url_for('minhas_reservas') }}">As Minhas Reservas</a>
+            <a href="{{ url_for('contacto') }}">Contacte-nos</a>
+        </div>
+    </nav>
+
+    <!-- CABEÇALHO -->
+    <header class="hero-short-section" style="background-image: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), url('{{ url_for('static', filename='imagens/background.jpg') }}');">
+        <div class="hero-short-content">
+            <h1>Editar Reserva</h1>
+            <div class="breadcrumb-custom">
+                <a href="{{ url_for('index') }}">Início</a>
+                <span class="separator">&gt;</span>
+                <a href="{{ url_for('minhas_reservas') }}">As Minhas Reservas</a>
+                <span class="separator">&gt;</span>
+                <span class="active-page">Editar</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <main style="max-width: 700px; margin: 40px auto; padding: 0 20px 60px 20px;">
+        <div style="background: #ffffff; padding: 40px; border-radius: 4px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+
+            <h2 style="font-size: 22px; font-weight: bold; color: #111; text-transform: uppercase; margin: 0 0 8px 0;">Editar Reserva</h2>
+            <div class="red-divider" style="margin: 0 0 25px 0;"></div>
+
+            <p style="color: #4a5568; font-size: 15px; margin-bottom: 25px;">
+                Veículo: <strong style="color: #d90414;">{{ reserva.carro }}</strong>
+            </p>
+
+            <form action="{{ url_for('editar_reserva', id=reserva.id) }}" method="POST">
+
+                <div class="pay-form-row">
+                    <div class="pay-input-group">
+                        <label>📍 Local de Levantamento</label>
+                        <select name="local_retirada" required style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; background: #fff; outline: none;">
+                            <option value="Braga Centro" {% if reserva.local_retirada == 'Braga Centro' %}selected{% endif %}>Braga Centro</option>
+                            <option value="Aeroporto do Porto" {% if reserva.local_retirada == 'Aeroporto do Porto' %}selected{% endif %}>Aeroporto do Porto</option>
+                            <option value="Lisboa Centro" {% if reserva.local_retirada == 'Lisboa Centro' %}selected{% endif %}>Lisboa Centro</option>
+                            <option value="Porto Centro" {% if reserva.local_retirada == 'Porto Centro' %}selected{% endif %}>Porto Centro</option>
+                        </select>
+                    </div>
+                    <div class="pay-input-group">
+                        <label>🏁 Local de Entrega</label>
+                        <select name="local_devolucao" required style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; background: #fff; outline: none;">
+                            <option value="Braga Centro" {% if reserva.local_devolucao == 'Braga Centro' %}selected{% endif %}>Braga Centro</option>
+                            <option value="Aeroporto do Porto" {% if reserva.local_devolucao == 'Aeroporto do Porto' %}selected{% endif %}>Aeroporto do Porto</option>
+                            <option value="Lisboa Centro" {% if reserva.local_devolucao == 'Lisboa Centro' %}selected{% endif %}>Lisboa Centro</option>
+                            <option value="Porto Centro" {% if reserva.local_devolucao == 'Porto Centro' %}selected{% endif %}>Porto Centro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pay-form-row">
+                    <div class="pay-input-group">
+                        <label>📅 Data de Levantamento</label>
+                        <input type="date" name="data_retirada" value="{{ reserva.data_retirada }}" required
+                               style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none;">
+                    </div>
+                    <div class="pay-input-group">
+                        <label>🕐 Hora de Levantamento</label>
+                        <input type="time" name="hora_retirada" value="{{ reserva.hora_retirada }}" required
+                               style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none;">
+                    </div>
+                </div>
+
+                <div class="pay-form-row">
+                    <div class="pay-input-group">
+                        <label>📅 Data de Entrega</label>
+                        <input type="date" name="data_devolucao" value="{{ reserva.data_devolucao }}" required
+                               style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none;">
+                    </div>
+                    <div class="pay-input-group">
+                        <label>🕐 Hora de Entrega</label>
+                        <input type="time" name="hora_devolucao" value="{{ reserva.hora_devolucao }}" required
+                               style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none;">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 15px; margin-top: 10px;">
+                    <a href="{{ url_for('minhas_reservas') }}" class="btn-outline-dark" style="flex: 1; text-align: center; padding: 14px;">Cancelar</a>
+                    <button type="submit" class="btn-pay-confirm" style="flex: 1;">Guardar Alterações</button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="footer-section">
+        <div class="footer-container">
+            <div class="footer-column footer-about">
+                <div class="footer-logo">
+                    <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+                </div>
+                <p>Grandes ofertas e o melhor serviço desde 1977. Obtenha seu orçamento para o aluguer de diversas marcas e modelos. Aluguer rápido, fácil e seguro. Apoio ao cliente em mais de 30 países. Cancelamento gratuito.</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">G+</a>
+                </div>
+            </div>
+            <div class="footer-column footer-contact">
+                <h3>Contacte-Nos</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📍</span>
+                        <p>Braga, Portugal</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">✉️</span>
+                        <p>seuwebsite@site.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📞</span>
+                        <p>+351 933 021 041</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

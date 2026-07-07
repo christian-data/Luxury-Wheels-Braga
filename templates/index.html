@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Wheels - Encontre o Seu Carro</title>
+    <!-- Ligação para o CSS dentro da pasta static -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=11">
+</head>
+
+<body>
+    <!-- BARRA DE NAVEGAÇÃO SUPERIOR ESCURA -->
+    <nav class="navbar-custom">
+        <!-- Logótipo centralizado -->
+        <a class="brand-logo" href="{{ url_for('login') }}">
+            <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+        </a>
+
+        <!-- Links do Menu - Criando rotas de uma página para a outra -->
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('car_list') }}">Carros</a>
+            <a href="{{ url_for('login') }}">Iniciar Sessão</a>
+            <a href="{{ url_for('register') }}">Registar-se</a>
+            <a href="{{ url_for('minhas_reservas') }}">As Minhas Reservas</a>
+            <a href="{{ url_for('contacto') }}">Contacte-nos</a>
+        </div>
+
+    </nav>
+
+    <!-- (CONTEÚDO PRINCIPAL) -->
+    <!-- Fundo escuro para o piloto não ficar com fundo branco -->
+    <header class="hero-container" style="background-color: #0b0f19;">
+
+        <!-- Esta div carrega a imagem de fundo através do Flask -->
+        <div class="hero-bg-overlay" style="background-image: url('{{ url_for('static', filename='imagens/banner.jpg') }}');"></div>
+        <div class="hero-content-main">
+
+            <!-- Formulário de Reserva (Esquerda) -->
+            <div class="booking-card">
+                <h3>Procure o Seu Carro</h3>
+                <form action="{{ url_for('escolher_datas') }}" method="POST">
+                    <div class="input-group-form">
+                        <select name="carro" required>
+                            <option value="">Escolha o Tipo de Carro</option>
+                            <option value="Pajero Rang">Pajero Rang</option>
+                            <option value="Mirage Ranger">Mirage Ranger</option>
+                            <option value="Volkswagen">Volkswagen</option>
+                            <option value="Rolls-Royce">Rolls-Royce</option>
+                            <option value="Subaru Forester">Subaru Forester</option>
+                            <option value="Porsche">Porsche</option>
+                        </select>
+                    </div>
+                    <div class="input-row-form">
+                        <input type="text" name="local_levantamento" placeholder="Local de Levantamento" required>
+                        <input type="text" name="local_entrega" placeholder="Local de Entrega" required>
+                    </div>
+                    <div class="input-row-form">
+                        <input type="date" name="data_levantamento" required>
+                        <input type="time" name="hora_levantamento" value="12:00">
+                    </div>
+                    <div class="input-row-form">
+                        <input type="date" name="data_entrega" required>
+                        <input type="time" name="hora_entrega" value="12:00">
+                    </div>
+                    <button type="submit" class="btn-reserve">Reserve</button>
+                </form>
+            </div>
+
+            <!-- Texto Central -->
+            <div class="hero-text-box">
+                <h2>Encontre O Seu <br><span>Carro</span></h2>
+                <p>Grandes ofertas e o melhor serviço desde 1977.
+                    Obtenha seu orçamento para o aluguer de vários veículos de diversas marcar e modelos.
+                    Aluguer rápido, fácil e seguro.
+                    Apoio ao cliente em mais de 30 países.
+                    Cancelamento gratuíto.</p>
+                <a href="{{ url_for('car_list') }}" class="btn-vehicles">Ver Todos Os Veículos</a>
+            </div>
+
+            <!-- Imagem do Condutor (Direita) -->
+            <div class="hero-driver-box">
+                <img src="{{ url_for('static', filename='imagens/banner-man.png') }}" alt="Condutor Luxury Wheels">
+            </div>
+        </div>
+    </header>
+
+    <!-- BARRA DE ESTATÍSTICAS VERMELHA -->
+    <section class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-icon">🚗</span>
+            <div class="stat-info">
+                <h4>297</h4>
+                <p>Total De Carros</p>
+            </div>
+        </div>
+        <div class="stat-item">
+            <span class="stat-icon">😊</span>
+            <div class="stat-info">
+                <h4>45.574</h4>
+                <p>Clientes Satisfeitos</p>
+            </div>
+        </div>
+        <div class="stat-item">
+            <span class="stat-icon">🚚</span>
+            <div class="stat-info">
+                <h4>1454M</h4>
+                <p>Tempo De Viagem</p>
+            </div>
+        </div>
+        <div class="stat-item">
+            <span class="stat-icon">🔧</span>
+            <div class="stat-info">
+                <h4>8642</h4>
+                <p>Solução</p>
+            </div>
+        </div>
+    </section>
+
+        <!-- SECÇÃO: OS NOSSOS CARROS -->
+    <section class="cars-section">
+        <div class="cars-header">
+            <h2>Os Nossos Carros <br> <span>Fantásticos Estão Aqui</span></h2>
+            <div class="red-divider"></div>
+            <p>Não espere pelo auto carro, crie o seu próprio caminho.
+                A liberdade que você busca cabe no seu bolso. Sua próxima viagem está a apenas alguns cliques de distância.</p>
+        </div>
+
+        <div class="cars-grid">
+            <!-- Carro 1: Forester Subar -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="{{ url_for('static', filename='imagens/forester subar.jpg') }}" alt="Forester Subar">
+                </div>
+                <div class="car-details">
+                    <h3>Forester Subar</h3>
+                    <p class="car-price">A Partir De 50€ Por Dia</p>
+                    <p class="car-description">Veículo forte e rápido. Ideal para trabalhos em longas viagens. Alugue agora.</p>
+                    <a href="#" class="btn-rent">Alugar Carro</a>
+                    <div class="car-meta">
+                        <span>🚗 Model 201d</span>
+                        <span>🛣️ 41800 KM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carro 2: Mistubisshi -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="{{ url_for('static', filename='imagens/mistubisshi.jpg') }}" alt="Mistubisshi">
+                </div>
+                <div class="car-details">
+                    <h3>Mistubisshi</h3>
+                    <p class="car-price">A Partir De 40€ Por Dia</p>
+                    <p class="car-description">Se precisas de carro confortável e elegante, esse pode ser um bom aluguer pra sí.</p>
+                    <a href="#" class="btn-rent">Alugar Carro</a>
+                    <div class="car-meta">
+                        <span>🚗 Model 452b</span>
+                        <span>🛣️ 7800 KM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carro 3: Mirage Ranger -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="{{ url_for('static', filename='imagens/mirage ranger.jpg') }}" alt="Mirage Ranger">
+                </div>
+                <div class="car-details">
+                    <h3>Mirage Ranger</h3>
+                    <p class="car-price">A Partir De 40€ Por Dia</p>
+                    <p class="car-description">Veículo compacto e estiloso pra um bom passeio num final de semana.</p>
+                    <a href="#" class="btn-rent">Alugar Carro</a>
+                    <div class="car-meta">
+                        <span>🚗 Model 560 cla</span>
+                        <span>🛣️ 28000 KM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carro 4: Pajero Ranger -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="{{ url_for('static', filename='imagens/pajero ranger.jpg') }}" alt="Pajero Ranger">
+                </div>
+                <div class="car-details">
+                    <h3>Pajero Ranger</h3>
+                    <p class="car-price">A Partir De 50€ Por Dia</p>
+                    <p class="car-description">Grande, espaçoso e muito econômico pra sua viagem em família ficar inenarrável.</p>
+                    <a href="#" class="btn-rent">Alugar Carro</a>
+                    <div class="car-meta">
+                        <span>🚗 Model 2024 SUV</span>
+                        <span>🛣️ 12000 KM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- RODAPÉ DA PÁGINA (FOOTER) -->
+    <footer class="footer-section">
+        <div class="footer-container">
+
+            <!-- Coluna da Esquerda: Logótipo, Texto e Redes Sociais -->
+            <div class="footer-column footer-about">
+                <div class="footer-logo">
+                    <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+                </div>
+                <p>Grandes ofertas e o melhor serviço desde 1977.
+                    Obtenha seu orçamento para o aluguer de vários veículos de diversas marcas e modelos.
+                    Aluguer rápido, fácil e seguro.
+                    Apoio ao cliente em mais de 30 países.
+                    Cancelamento gratuíto.</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">G+</a>
+                </div>
+            </div>
+
+            <!-- Coluna da Direita: Contactos -->
+            <div class="footer-column footer-contact">
+                <h3>Contacte-Nos</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📍</span>
+                        <p>Braga, Portugal</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">✉️</span>
+                        <p>linkedin.com/in/christian-de-oliveira-aaa44034b</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📞</span>
+                        <p>+351 933 021 041</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+
+

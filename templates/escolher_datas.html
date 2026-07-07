@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Wheels - Escolher Datas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=15">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <nav class="navbar-custom">
+        <a class="brand-logo" href="{{ url_for('login') }}">
+            <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+        </a>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('car_list') }}" >Carros</a>
+            <a href="{{ url_for('login') }}">Iniciar Sessão</a>
+            <a href="{{ url_for('register') }}">Registar-se</a>
+            <a href="{{ url_for('minhas_reservas') }}">As Minhas Reservas</a>
+            <a href="{{ url_for('contacto') }}">Contacte-nos</a>
+        </div>
+    </nav>
+
+    <!-- CABEÇALHO DA PÁGINA -->
+    <header class="hero-short-section" style="height: 20vh; background-image: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), url('{{ url_for('static', filename='imagens/background.jpg') }}');">
+        <div class="hero-short-content">
+            <h1>Detalhes da Reserva</h1>
+            <div class="breadcrumb-custom">
+                <a href="{{ url_for('index') }}">Início</a>
+                <span class="separator">&gt;</span>
+                <a href="{{ url_for('car_list') }}">Lista de Carros</a>
+                <span class="separator">&gt;</span>
+                <span class="active-page">Detalhes</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main style="max-width: 700px; margin: 15px auto; padding: 0 20px 60px 20px;">
+        <div style="background: #ffffff; padding: 40px; border-radius: 4px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+
+            <h2 style="font-size: 22px; font-weight: bold; color: #111; text-transform: uppercase; margin: 0 0 8px 0;">Detalhes do Aluguer</h2>
+            <div class="red-divider" style="margin: 0 0 25px 0;"></div>
+
+           <p style="color: #4a5568; font-size: 15px; margin-bottom: 20px;">
+    Veículo selecionado: <strong style="color: #d90414;">{{ carro }}</strong>
+            </p>
+
+            <!-- FOTO DO CARRO -->
+            <div style="text-align: center; margin-bottom: 30px;">
+                {% if carro == 'Pajero Rang' %}
+                    <img src="{{ url_for('static', filename='imagens/pajero rang.jpg') }}" style="max-height: 200px; width: auto; border-radius: 4px;">
+                {% elif carro == 'Mirage Ranger' %}
+                    <img src="{{ url_for('static', filename='imagens/mirage range.jpg') }}" style="max-height: 200px; width: auto; border-radius: 4px;">
+                {% elif carro == 'Volkswagen' %}
+                    <img src="{{ url_for('static', filename='imagens/Volkswagen.jpg') }}" style="max-height: 200px; width: auto; border-radius: 4px;">
+                {% elif carro == 'Rolls-Royce' %}
+                    <img src="{{ url_for('static', filename='imagens/Rools royce.jpg') }}" style="max-height: 200px; width: auto; border-radius: 4px;">
+                {% elif carro == 'Subaru Forester' %}
+                    <img src="{{ url_for('static', filename='imagens/forester subar.jpg') }}" style="max-height: 200px; width: auto; border-radius: 4px;">
+                {% elif carro == 'Porsche' %}
+                    <img src="{{ url_for('static', filename='imagens/Porsche.jpg') }}" style="max-height: 200px; width: auto; border-radius: 4px;">
+                {% endif %}
+            </div>
+
+            </div>
+
+            <form action="{{ url_for('escolher_datas') }}" method="POST">
+                <input type="hidden" name="carro" value="{{ carro }}">
+
+                <!-- Locais -->
+                <div class="pay-form-row">
+                    <div class="pay-input-group">
+                        <label for="local_levantamento">📍 Local de Levantamento</label>
+                        <select id="local_levantamento" name="local_levantamento" required style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; background: #fff; outline: none;">
+                            <option value="">Escolha o local</option>
+                            <option value="Braga Centro">Braga Centro</option>
+                            <option value="Aeroporto do Porto">Aeroporto do Porto</option>
+                            <option value="Lisboa Centro">Lisboa Centro</option>
+                            <option value="Porto Centro">Porto Centro</option>
+                        </select>
+                    </div>
+                    <div class="pay-input-group">
+                        <label for="local_entrega">🏁 Local de Entrega</label>
+                        <select id="local_entrega" name="local_entrega" required style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; background: #fff; outline: none;">
+                            <option value="">Escolha o local</option>
+                            <option value="Braga Centro">Braga Centro</option>
+                            <option value="Aeroporto do Porto">Aeroporto do Porto</option>
+                            <option value="Lisboa Centro">Lisboa Centro</option>
+                            <option value="Porto Centro">Porto Centro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Datas de levantamento -->
+                <div class="pay-form-row">
+                    <div class="pay-input-group">
+                        <label for="data_levantamento">📅 Data de Levantamento</label>
+                        <input type="date" id="data_levantamento" name="data_levantamento" required
+                               style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none;">
+                    </div>
+                    <div class="pay-input-group">
+                        <label for="hora_levantamento">🕐 Hora de Levantamento</label>
+                        <input type="time" id="hora_levantamento" name="hora_levantamento" required
+                               style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none;">
+                    </div>
+                </div>
+
+                <!-- Datas de entrega -->
+                <div class="pay-form-row">
+                    <div class="pay-input-group">
+                        <label for="data_entrega">📅 Data de Entrega</label>
+                        <input type="date" id="data_entrega" name="data_entrega" required
+                               style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none;">
+                    </div>
+                    <div class="pay-input-group">
+                        <label for="hora_entrega">🕐 Hora de Entrega</label>
+                        <input type="time" id="hora_entrega" name="hora_entrega" required
+                               style="padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; outline: none;">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-pay-confirm" style="margin-top: 10px;">
+                    Continuar para Resumo
+                </button>
+
+            </form>
+        </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="footer-section">
+        <div class="footer-container">
+            <div class="footer-column footer-about">
+                <div class="footer-logo">
+                    <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+                </div>
+                <p>Grandes ofertas e o melhor serviço desde 1977. Obtenha seu orçamento para o aluguer de diversas marcas e modelos. Aluguer rápido, fácil e seguro. Apoio ao cliente em mais de 30 países. Cancelamento gratuito.</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">G+</a>
+                </div>
+            </div>
+            <div class="footer-column footer-contact">
+                <h3>Contacte-Nos</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📍</span>
+                        <p>Braga, Portugal</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">✉️</span>
+                        <p>seuwebsite@site.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📞</span>
+                        <p>+351 933 021 041</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

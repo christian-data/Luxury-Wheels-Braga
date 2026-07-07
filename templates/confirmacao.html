@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Wheels - Reserva Confirmada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=15">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <nav class="navbar-custom">
+        <a class="brand-logo" href="{{ url_for('login') }}">
+            <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+        </a>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('car_list') }}">Carros</a>
+            <a href="{{ url_for('login') }}">Iniciar Sessão</a>
+            <a href="{{ url_for('register') }}">Registar-se</a>
+            <a href="{{ url_for('minhas_reservas') }}">As Minhas Reservas</a>
+            <a href="{{ url_for('contacto') }}">Contacte-nos</a>
+        </div>
+    </nav>
+
+    <!-- CABEÇALHO DA PÁGINA -->
+    <header class="hero-short-section" style="background-image: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), url('{{ url_for('static', filename='imagens/background.jpg') }}');">
+        <div class="hero-short-content">
+            <h1>Reserva Confirmada</h1>
+            <div class="breadcrumb-custom">
+                <a href="{{ url_for('index') }}">Início</a>
+                <span class="separator">&gt;</span>
+                <a href="{{ url_for('car_list') }}">Lista de Carros</a>
+                <span class="separator">&gt;</span>
+                <span class="active-page">Confirmação</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="confirm-container">
+
+        <!-- MENSAGEM DE SUCESSO -->
+        <div class="confirm-success-banner">
+            <span class="confirm-check">✔</span>
+            <div>
+                <h2>Reserva efetuada com sucesso!</h2>
+                <p>Obrigado por escolher a Luxury Wheels Braga. A sua reserva foi confirmada e receberá em breve um email com os detalhes.</p>
+            </div>
+        </div>
+
+        <!-- RESUMO DA RESERVA -->
+        <div class="confirm-card">
+            <h3 class="confirm-card-title">Resumo da Reserva</h3>
+            <div class="red-divider" style="margin: 0 0 25px 0;"></div>
+
+            <div class="confirm-grid">
+
+                <div class="confirm-item">
+                    <span class="confirm-label">🚗 Veículo</span>
+                    <span class="confirm-value">{{ carro_selecionado if carro_selecionado else '—' }}</span>
+                </div>
+
+                <div class="confirm-item">
+                    <span class="confirm-label">📍 Local de Levantamento</span>
+                    <span class="confirm-value">{{ local_retirada if local_retirada else '—' }}</span>
+                </div>
+
+                <div class="confirm-item">
+                    <span class="confirm-label">📅 Data de Levantamento</span>
+                    <span class="confirm-value">{{ data_retirada if data_retirada else '—' }} {{ hora_retirada if hora_retirada else '' }}</span>
+                </div>
+
+                <div class="confirm-item">
+                    <span class="confirm-label">🏁 Local de Entrega</span>
+                    <span class="confirm-value">{{ local_devolucao if local_devolucao else '—' }}</span>
+                </div>
+
+                <div class="confirm-item">
+                    <span class="confirm-label">📅 Data de Entrega</span>
+                    <span class="confirm-value">{{ data_devolucao if data_devolucao else '—' }} {{ hora_devolucao if hora_devolucao else '' }}</span>
+                </div>
+
+                <div class="confirm-item">
+                    <span class="confirm-label">💳 Titular do Cartão</span>
+                    <span class="confirm-value">{{ nome_cartao if nome_cartao else '—' }}</span>
+                </div>
+
+                <div class="confirm-item">
+                    <span class="confirm-label">📆 Dias de Aluguer</span>
+                    <span class="confirm-value">{{ dias }} dia(s)</span>
+                </div>
+
+                <div class="confirm-item">
+                    <span class="confirm-label">💳 Total Pago</span>
+                    <span class="confirm-value" style="color: #d90414;">{{ total }}€</span>
+                </div>
+
+            </div>
+
+            <div class="confirm-actions">
+                <a href="{{ url_for('index') }}" class="btn-vehicles">Voltar ao Início</a>
+                <a href="{{ url_for('car_list') }}" class="btn-outline-dark">Ver Mais Carros</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="footer-section">
+        <div class="footer-container">
+            <div class="footer-column footer-about">
+                <div class="footer-logo">
+                    <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+                </div>
+                <p>Grandes ofertas e o melhor serviço desde 1977.
+                    Obtenha seu orçamento para o aluguer de vários veículos de diversas marcas e modelos.
+                    Aluguer rápido, fácil e seguro.
+                    Apoio ao cliente em mais de 30 países.
+                    Cancelamento gratuíto.</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">G+</a>
+                </div>
+            </div>
+            <div class="footer-column footer-contact">
+                <h3>Contacte-Nos</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📍</span>
+                        <p>Braga, Portugal</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">✉️</span>
+                        <p>linkedin.com/in/christian-de-oliveira-aaa44034b</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📞</span>
+                        <p>+351 933 021 041</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

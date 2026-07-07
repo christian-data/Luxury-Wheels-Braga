@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Luxury Wheels - Registar-se</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <nav class="navbar-custom">
+        <div class="brand-logo">
+            <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('car_list') }}">Carros</a>
+            <a href="{{ url_for('login') }}">Iniciar Sessão</a>
+            <a href="{{ url_for('register') }}" class="active">Registar-se</a>
+            <a href="{{ url_for('minhas_reservas') }}">As Minhas Reservas</a>
+            <a href="{{ url_for('contacto') }}">Contacte-nos</a>
+        </div>
+    </nav>
+
+    <!-- CABEÇALHO DA PÁGINA -->
+    <header class="hero-short-section" style="background-image: linear-gradient(rgba(11, 15, 25, 0.8), rgba(11, 15, 25, 0.8)), url('{{ url_for('static', filename='imagens/background.jpg') }}');">
+        <div class="hero-short-content">
+            <h1>Criar Conta</h1>
+            <div class="breadcrumb-custom">
+                <a href="{{ url_for('index') }}">Início</a>
+                <span class="separator">&gt;</span>
+                <span class="active-page">Registar-se</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTAINER DO FORMULÁRIO DE REGISTO -->
+    <main class="login-container-custom">
+        <div class="login-card">
+            <h2>CRIE A SUA CONTA</h2>
+            {% if erro %}
+                <p style="color: #d90414; text-align: center; margin-bottom: 15px; font-weight: bold;">{{ erro }}</p>
+            {% endif %}
+            <form action="{{ url_for('register') }}" method="POST">
+
+                <!-- 1.id="primeiro_nome" -->
+                <div class="input-group-custom">
+                    <label for="primeiro_nome">Primeiro nome</label>
+                    <input type="text" id="primeiro_nome" name="primeiro_nome" placeholder="Insira o seu nome" required>
+                </div>
+
+                <!-- 2.id="ultimo_nome" -->
+                <div class="input-group-custom">
+                    <label for="ultimo_nome">Último Nome</label>
+                    <input type="text" id="ultimo_nome" name="ultimo_nome" placeholder="Insira o seu último nome" required>
+                </div>
+                <div class="input-group-custom">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="Insira o seu email" required>
+                </div>
+
+                <!-- 3.id="password" -->
+                <div class="input-group-custom">
+                    <label for="password">Senha / Palavra-Passe</label>
+                    <input type="password" id="password" name="password" placeholder="Crie uma senha" required>
+                </div>
+
+                <!-- 4. id="confirm_password" -->
+                <div class="input-group-custom">
+                    <label for="confirm_password">Confirmar Senha / Palavra-Passe</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Repita a senha" required>
+                </div>
+                <button type="submit" class="btn-login-custom">CONCLUIR</button>
+                <div style="margin-top: 15px; text-align: center;">
+                    <a href="{{ url_for('login') }}" style="color: #718096; text-decoration: none; font-size: 13px;">Já tem conta? Faça Login</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
+
+
+

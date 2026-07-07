@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Luxury Wheels - Iniciar Sessão</title>
+    <!-- Ligação correta para o seu CSS no Flask -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGAÇÃO (Preta superior) -->
+    <nav class="navbar-custom">
+        <div class="brand-logo">
+            <!-- Certifique-se de que a imagem existe na pasta static/imagens -->
+            <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('car_list') }}">Carros</a>
+            <a href="{{ url_for('login') }}" class="active">Iniciar Sessão</a>
+            <a href="{{ url_for('register') }}">Registar-se</a>
+            <a href="{{ url_for('minhas_reservas') }}">As Minhas Reservas</a>
+            <a href="{{ url_for('contacto') }}">Contacte-nos</a>
+        </div>
+    </nav>
+
+    <!-- CABEÇALHO DA PÁGINA (Seção Escura Curta) -->
+    <header class="hero-short-section" style="background-image: linear-gradient(rgba(11, 15, 25, 0.8), rgba(11, 15, 25, 0.8)), url('{{ url_for('static', filename='imagens/background.jpg') }}');">
+        <div class="hero-short-content">
+            <h1>Iniciar Sessão</h1>
+            <div class="breadcrumb-custom">
+                <a href="{{ url_for('register') }}">Início</a>
+                <span class="separator">&gt;</span>
+                <span class="active-page">Iniciar Sessão</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTAINER QUE CENTRALIZA -->
+    <main class="login-container-custom">
+        <div class="login-card">
+            <h2>LOGIN / EMAIL</h2>
+
+            <!-- Formulário estruturado com as classes do seu CSS -->
+           <form action="{{ url_for('login') }}" method="POST">
+                <div class="input-group-custom">
+                    <label for="email">Login / Email</label>
+                    <input type="email" id="email" name="email" placeholder="Insira o seu email" required>
+                </div>
+                <div class="input-group-custom">
+                    <label for="password">Senha / Palavra-Passe</label>
+                    <input type="password" id="password" name="password" placeholder="Insira a sua senha" required>
+                </div>
+
+                <button type="submit" class="btn-login-custom">OK</button>
+                <div style="margin-top: 15px; text-align: center;">
+                    <a href="{{ url_for('register') }}" style="color: #d90414; text-decoration: none; font-size: 13px; font-weight: bold;">Criar nova conta</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

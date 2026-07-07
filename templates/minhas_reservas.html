@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Wheels - As Minhas Reservas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=16">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <nav class="navbar-custom">
+        <a class="brand-logo" href="{{ url_for('login') }}">
+            <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+        </a>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('car_list') }}">Carros</a>
+            <a href="{{ url_for('login') }}">Iniciar Sessão</a>
+            <a href="{{ url_for('register') }}">Registar-se</a>
+            <a href="{{ url_for('minhas_reservas') }}" class="active">As Minhas Reservas</a>
+            <a href="{{ url_for('contacto') }}">Contacte-nos</a>
+        </div>
+    </nav>
+
+    <!-- CABEÇALHO DA PÁGINA -->
+    <header class="hero-short-section" style="background-image: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), url('{{ url_for('static', filename='imagens/background.jpg') }}');">
+        <div class="hero-short-content">
+            <h1>As Minhas Reservas</h1>
+            <div class="breadcrumb-custom">
+                <a href="{{ url_for('index') }}">Início</a>
+                <span class="separator">&gt;</span>
+                <span class="active-page">As Minhas Reservas</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="reservas-container">
+
+        {% if reservas %}
+            <div class="reservas-grid">
+                {% for reserva in reservas %}
+                <div class="reserva-card">
+
+                    <div class="reserva-card-header">
+                        <h3>{{ reserva.carro }}</h3>
+                        <span class="reserva-badge">Confirmada ✔</span>
+                    </div>
+
+                    <div class="reserva-card-body">
+                        <div class="reserva-item">
+                            <span class="reserva-label">📍 Levantamento</span>
+                            <span class="reserva-value">{{ reserva.local_retirada }}</span>
+                        </div>
+                        <!-- BOTÕES DE AÇÃO -->
+                        <div style="grid-column: 1 / -1; display: flex; gap: 15px; padding-top: 15px; border-top: 1px dashed #e2e8f0; margin-top: 5px;">
+                            <a href="{{ url_for('editar_reserva', id=reserva.id) }}" class="btn-outline-dark" style="flex: 1; text-align: center;">✏️ Editar</a>
+                            <form action="{{ url_for('cancelar_reserva', id=reserva.id) }}" method="POST" style="flex: 1;">
+                                <button type="submit" onclick="return confirm('Tens a certeza que queres cancelar esta reserva?')"
+                                    style="width: 100%; padding: 12px; background-color: #d90414; color: #fff; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; text-transform: uppercase; cursor: pointer;">
+                                    🗑️ Cancelar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                        <div class="reserva-item">
+                            <span class="reserva-label">📅 Data Levantamento</span>
+                            <span class="reserva-value">{{ reserva.data_retirada }} às {{ reserva.hora_retirada }}</span>
+                        </div>
+                        <!-- BOTÕES DE AÇÃO -->
+                        <div style="grid-column: 1 / -1; display: flex; gap: 15px; padding-top: 15px; border-top: 1px dashed #e2e8f0; margin-top: 5px;">
+                            <a href="{{ url_for('editar_reserva', id=reserva.id) }}" class="btn-outline-dark" style="flex: 1; text-align: center;">✏️ Editar</a>
+                            <form action="{{ url_for('cancelar_reserva', id=reserva.id) }}" method="POST" style="flex: 1;">
+                                <button type="submit" onclick="return confirm('Tens a certeza que queres cancelar esta reserva?')"
+                                    style="width: 100%; padding: 12px; background-color: #d90414; color: #fff; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; text-transform: uppercase; cursor: pointer;">
+                                    🗑️ Cancelar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                        <div class="reserva-item">
+                            <span class="reserva-label">🏁 Entrega</span>
+                            <span class="reserva-value">{{ reserva.local_devolucao }}</span>
+                        </div>
+                        <!-- BOTÕES DE AÇÃO -->
+                        <div style="grid-column: 1 / -1; display: flex; gap: 15px; padding-top: 15px; border-top: 1px dashed #e2e8f0; margin-top: 5px;">
+                            <a href="{{ url_for('editar_reserva', id=reserva.id) }}" class="btn-outline-dark" style="flex: 1; text-align: center;">✏️ Editar</a>
+                            <form action="{{ url_for('cancelar_reserva', id=reserva.id) }}" method="POST" style="flex: 1;">
+                                <button type="submit" onclick="return confirm('Tens a certeza que queres cancelar esta reserva?')"
+                                    style="width: 100%; padding: 12px; background-color: #d90414; color: #fff; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; text-transform: uppercase; cursor: pointer;">
+                                    🗑️ Cancelar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                        <div class="reserva-item">
+                            <span class="reserva-label">📅 Data Entrega</span>
+                            <span class="reserva-value">{{ reserva.data_devolucao }} às {{ reserva.hora_devolucao }}</span>
+                        </div>
+                        <!-- BOTÕES DE AÇÃO -->
+                        <div style="grid-column: 1 / -1; display: flex; gap: 15px; padding-top: 15px; border-top: 1px dashed #e2e8f0; margin-top: 5px;">
+                            <a href="{{ url_for('editar_reserva', id=reserva.id) }}" class="btn-outline-dark" style="flex: 1; text-align: center;">✏️ Editar</a>
+                            <form action="{{ url_for('cancelar_reserva', id=reserva.id) }}" method="POST" style="flex: 1;">
+                                <button type="submit" onclick="return confirm('Tens a certeza que queres cancelar esta reserva?')"
+                                    style="width: 100%; padding: 12px; background-color: #d90414; color: #fff; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; text-transform: uppercase; cursor: pointer;">
+                                    🗑️ Cancelar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                        <div class="reserva-item">
+                            <span class="reserva-label">💳 Titular</span>
+                            <span class="reserva-value">{{ reserva.nome_cartao }}</span>
+                        </div>
+                        <!-- BOTÕES DE AÇÃO -->
+                        <div style="grid-column: 1 / -1; display: flex; gap: 15px; padding-top: 15px; border-top: 1px dashed #e2e8f0; margin-top: 5px;">
+                            <a href="{{ url_for('editar_reserva', id=reserva.id) }}" class="btn-outline-dark" style="flex: 1; text-align: center;">✏️ Editar</a>
+                            <form action="{{ url_for('cancelar_reserva', id=reserva.id) }}" method="POST" style="flex: 1;">
+                                <button type="submit" onclick="return confirm('Tens a certeza que queres cancelar esta reserva?')"
+                                    style="width: 100%; padding: 12px; background-color: #d90414; color: #fff; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; text-transform: uppercase; cursor: pointer;">
+                                    🗑️ Cancelar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                        <div class="reserva-item">
+                            <span class="reserva-label">🗓️ Reserva feita em</span>
+                            <span class="reserva-value">{{ reserva.data_reserva.strftime('%d/%m/%Y às %H:%M') }}</span>
+                        </div>
+                        <!-- BOTÕES DE AÇÃO -->
+                        <div style="grid-column: 1 / -1; display: flex; gap: 15px; padding-top: 15px; border-top: 1px dashed #e2e8f0; margin-top: 5px;">
+                            <a href="{{ url_for('editar_reserva', id=reserva.id) }}" class="btn-outline-dark" style="flex: 1; text-align: center;">✏️ Editar</a>
+                            <form action="{{ url_for('cancelar_reserva', id=reserva.id) }}" method="POST" style="flex: 1;">
+                                <button type="submit" onclick="return confirm('Tens a certeza que queres cancelar esta reserva?')"
+                                    style="width: 100%; padding: 12px; background-color: #d90414; color: #fff; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; text-transform: uppercase; cursor: pointer;">
+                                    🗑️ Cancelar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        {% else %}
+            <div class="reservas-empty">
+                <p>🚗 Ainda não tens reservas.</p>
+                <a href="{{ url_for('car_list') }}" class="btn-vehicles">Ver Carros Disponíveis</a>
+            </div>
+        {% endif %}
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="footer-section">
+        <div class="footer-container">
+            <div class="footer-column footer-about">
+                <div class="footer-logo">
+                    <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+                </div>
+                <p>Grandes ofertas e o melhor serviço desde 1977.
+                    Obtenha seu orçamento para o aluguer de vários veículos de diversas marcas e modelos.
+                    Aluguer rápido, fácil e seguro.
+                    Apoio ao cliente em mais de 30 países.
+                    Cancelamento gratuíto.</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">G+</a>
+                </div>
+            </div>
+            <div class="footer-column footer-contact">
+                <h3>Contacte-Nos</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📍</span>
+                        <p>Braga, Portugal</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">✉️</span>
+                        <p>linkedin.com/in/christian-de-oliveira-aaa44034b</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📞</span>
+                        <p>+351 933 021 041</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Wheels - Contacto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=16">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <nav class="navbar-custom">
+        <a class="brand-logo" href="{{ url_for('login') }}">
+            <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+        </a>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('car_list') }}">Carros</a>
+            <a href="{{ url_for('login') }}">Iniciar Sessão</a>
+            <a href="{{ url_for('register') }}">Registar-se</a>
+            <a href="{{ url_for('minhas_reservas') }}">As Minhas Reservas</a>
+            <a href="{{ url_for('contacto') }}" class="active">Contacte-nos</a>
+        </div>
+    </nav>
+
+    <!-- CABEÇALHO DA PÁGINA -->
+    <header class="hero-short-section" style="background-image: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), url('{{ url_for('static', filename='imagens/background.jpg') }}');">
+        <div class="hero-short-content">
+            <h1>Nossos Contactos</h1>
+            <div class="breadcrumb-custom">
+                <a href="{{ url_for('index') }}">🏠 Início</a>
+                <span class="separator">&gt;</span>
+                <span class="active-page">Contacto</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="contact-container">
+
+        <!-- BLOCOS DE INFORMAÇÃO -->
+        <div class="contact-info-blocks">
+
+            <div class="contact-info-block">
+                <span class="contact-block-icon">📍</span>
+                <h3>Morada do Escritório</h3>
+                <p>Rua Agostinho Marques, 30</p>
+                <p>Braga, Portugal</p>
+            </div>
+
+            <div class="contact-info-block">
+                <span class="contact-block-icon">📞</span>
+                <h3>Número de Telefone</h3>
+                <p>+351 933 021 041</p>
+                <p>+351 933 021 042</p>
+            </div>
+
+            <div class="contact-info-block">
+                <span class="contact-block-icon">✉️</span>
+                <h3>Endereço de E-mail e Linkedin</h3>
+                <p>linkedin.com/in/christian-de-oliveira-aaa44034b</p>
+                <p>chrisfelix2206@yahoo.com.br</p>
+            </div>
+
+        </div>
+
+        <!-- FORMULÁRIO DE CONTACTO -->
+        <div class="contact-form-section">
+            <h2 class="contact-form-title">Enviar Mensagem</h2>
+
+            {% if mensagem_enviada %}
+                <p style="color: #38a169; font-weight: bold; margin-bottom: 20px;">✔ Mensagem enviada com sucesso! Entraremos em contacto brevemente.</p>
+            {% endif %}
+
+            <form action="{{ url_for('contacto') }}" method="POST">
+
+                <div class="contact-form-row">
+                    <input type="text" name="nome" placeholder="Nome *" required
+                           class="contact-input">
+                    <input type="email" name="email" placeholder="Email *" required
+                           class="contact-input">
+                </div>
+
+                <textarea name="mensagem" placeholder="Escreva o seu comentário..." required
+                          class="contact-textarea"></textarea>
+
+                <button type="submit" class="btn-contact-submit">
+                    Enviar Mensagem
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="footer-section">
+        <div class="footer-container">
+            <div class="footer-column footer-about">
+                <div class="footer-logo">
+                    <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+                </div>
+                <p>Grandes ofertas e o melhor serviço desde 1977.
+                    Obtenha seu orçamento para o aluguer de vários veículos de diversas marcas e modelos.
+                    Aluguer rápido, fácil e seguro.
+                    Apoio ao cliente em mais de 30 países.
+                    Cancelamento gratuíto.</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">G+</a>
+                </div>
+            </div>
+            <div class="footer-column footer-contact">
+                <h3>Contacte-Nos</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📍</span>
+                        <p>Braga, Portugal</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">✉️</span>
+                        <p>linkedin.com/in/christian-de-oliveira-aaa44034b</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📞</span>
+                        <p>+351 933 021 041</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

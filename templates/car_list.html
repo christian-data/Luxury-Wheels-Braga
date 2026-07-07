@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Wheels Braga - Lista de Carros</title>
+    <!-- Ligação para o CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=12">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGAÇÃO SUPERIOR ESCURA (Igual às outras páginas) -->
+    <nav class="navbar-custom">
+        <a class="brand-logo" href="{{ url_for('login') }}">
+            <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+        </a>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('car_list') }}" class="active">Carros</a>
+            <a href="{{ url_for('login') }}">Iniciar Sessão</a>
+            <a href="{{ url_for('register') }}">Registar-se</a>
+            <a href="{{ url_for('minhas_reservas') }}">As Minhas Reservas</a>
+            <a href="{{ url_for('contacto') }}">Contacte-nos</a>
+        </div>
+    </nav>
+
+    <!-- BANNER DE RESPALDO (Sub-Hero escuro com breadcrumbs) -->
+    <header class="hero-short-section" style="background-color: #0b0f19;">
+        <div class="hero-bg-overlay" style="background-image: url('{{ url_for('static', filename='imagens/banner.jpg') }}');"></div>
+        <div class="hero-short-content">
+            <h1>Reserva</h1>
+            <div class="breadcrumb-custom">
+                <a href="{{ url_for('index') }}">🏠 Início</a>
+                <span class="separator">&gt;</span>
+                <a href="#">Lista De Carros</a>
+                <span class="separator">&gt;</span>
+                <span class="active-page">Reserva</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ÁREA PRINCIPAL DA LISTAGEM (Layout de Duas Colunas) -->
+    <main class="list-page-container">
+
+        <!-- COLUNA DA ESQUERDA: GRELHA DE CARROS -->
+        <section class="list-left-column">
+
+            <!-- Barra superior de ordenação e pesquisa rápida -->
+            <div class="filter-top-bar">
+                <div class="sort-group">
+                    <label>Ordenar por:</label>
+                    <select>
+                        <option>Padrão Ranger</option>
+                        <option>Preço mais baixo</option>
+                        <option>Preço mais alto</option>
+                    </select>
+                </div>
+                <form method="GET" action="{{ url_for('car_list') }}" class="search-inline-group">
+                    <input type="text" name="pesquisa" placeholder="Pesquise o seu desejo..."
+                           value="{{ pesquisa }}">
+                    <button type="submit">Pesquisar</button>
+                </form>
+                <div class="view-icons">
+                    <span class="grid-icon active">☰</span>
+                    <span class="grid-icon">⚃</span>
+                </div>
+            </div>
+
+            <!-- Grelha com os carros em formato vertical -->
+            <div class="cars-vertical-grid">
+
+    {% set carros = [
+        {'nome': 'Pajero Rang', 'imagem': 'pajero rang.jpg', 'km': '32000'},
+        {'nome': 'Mirage Ranger', 'imagem': 'mirage range.jpg', 'km': '32000'},
+        {'nome': 'Volkswagen', 'imagem': 'Volkswagen.jpg', 'km': '32000'},
+        {'nome': 'Rolls-Royce', 'imagem': 'Rools royce.jpg', 'km': '32000'},
+        {'nome': 'Subaru Forester', 'imagem': 'forester subar.jpg', 'km': '22000'},
+        {'nome': 'Porsche', 'imagem': 'Porsche.jpg', 'km': '32000'}
+    ] %}
+
+    {% set encontrou = [] %}
+
+    {% for carro in carros %}
+        {% if pesquisa == '' or pesquisa.lower() in carro.nome.lower() %}
+            {% set _ = encontrou.append(1) %}
+            <div class="car-box-vertical">
+                <div class="car-box-image">
+                    <img src="{{ url_for('static', filename='imagens/' + carro.imagem) }}" alt="{{ carro.nome }}">
+                </div>
+                <div class="car-box-info">
+                    <h3>{{ carro.nome }}</h3>
+                    <p class="price-text">A Partir De {{ {'Pajero Rang': 50, 'Mirage Ranger': 40, 'Volkswagen': 45, 'Rolls-Royce': 200, 'Subaru Forester': 55, 'Porsche': 180}[carro.nome] }}€ Por Dia</p>
+                    <p class="desc-text">Aliquam sollicitudin dolores tristiquvel ornare, vitae aenean, vitae aenean.</p>
+                    <a href="{{ url_for('escolher_datas') }}?carro={{ carro.nome }}" class="btn-rent-red">Alugar Carro</a>
+                    <div class="meta-bottom">
+                        <span>🚗 Model 2014ib</span>
+                        <span>🛣️ {{ carro.km }} KM</span>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    {% if encontrou|length == 0 %}
+        <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #718096;">
+            <p style="font-size: 18px;">🚗 Nenhum carro encontrado para "<strong>{{ pesquisa }}</strong>".</p>
+            <a href="{{ url_for('car_list') }}" class="btn-vehicles" style="margin-top: 15px; display: inline-block;">Ver Todos os Carros</a>
+        </div>
+    {% endif %}
+
+</div>
+
+               <!-- Carro 1: Pajero Rang -->
+                <div class="car-box-vertical">
+                    <div class="car-box-image">
+                        <img src="{{ url_for('static', filename='imagens/pajero rang.jpg') }}" alt="Pajero Rang">
+                    </div>
+                    <div class="car-box-info">
+                        <h3>Pajero Rang</h3>
+                        <p class="price-text">A Partir De 50€ Por Dia</p>
+                        <p class="desc-text">Grande, espaçoso e muito econômico pra sua viagem em família ficar inenarrável.</p>
+                        <a href="{{ url_for('escolher_datas') }}?carro=Pajero Rang" class="btn-rent-red">Alugar Carro</a>
+                        <div class="meta-bottom">
+                            <span>🚗 Model 2024 SUV</span>
+                            <span>🛣️ 12000 KM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carro 2: Mirage Ranger -->
+                <div class="car-box-vertical">
+                    <div class="car-box-image">
+                        <img src="{{ url_for('static', filename='imagens/mirage range.jpg') }}" alt="Mirage Ranger">
+                    </div>
+                    <div class="car-box-info">
+                        <h3>Mirage Ranger</h3>
+                        <p class="price-text">A Partir De 40€ Por Dia</p>
+                        <p class="desc-text">Veículo compacto e estiloso para um bom passeio num final de semana.</p>
+                        <a href="{{ url_for('escolher_datas') }}?carro=Mirage Ranger" class="btn-rent-red">Alugar Carro</a>
+                        <div class="meta-bottom">
+                            <span>🚗 Model 5060 cla</span>
+                            <span>🛣️ 28000 KM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carro 3: Volkswagen -->
+                <div class="car-box-vertical">
+                    <div class="car-box-image">
+                        <img src="{{ url_for('static', filename='imagens/Volkswagen.jpg') }}" alt="Volkswagen">
+                    </div>
+                    <div class="car-box-info">
+                        <h3>Volkswagen</h3>
+                        <p class="price-text">A Partir De 45€ Por Dia</p>
+                        <p class="desc-text">Viatura classica alemã. Forte e confortável.</p>
+                        <a href="{{ url_for('escolher_datas') }}?carro=Volkswagen" class="btn-rent-red">Alugar Carro</a>
+                        <div class="meta-bottom">
+                            <span>🚗 Model 2022 BRA</span>
+                            <span>🛣️ 32000 KM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carro 4: Rolls-Royce -->
+                <div class="car-box-vertical">
+                    <div class="car-box-image">
+                        <img src="{{ url_for('static', filename='imagens/Rools royce.jpg') }}" alt="Rolls-Royce">
+                    </div>
+                    <div class="car-box-info">
+                        <h3>Rolls-Royce</h3>
+                        <p class="price-text">A Partir De 200€ Por Dia</p>
+                        <p class="desc-text">Se precisas de veículo para um grande evento; Alugue um classico.</p>
+                        <a href="{{ url_for('escolher_datas') }}?carro=Rolls-Royce" class="btn-rent-red">Alugar Carro</a>
+                        <div class="meta-bottom">
+                            <span>🚗 Model 220 classic</span>
+                            <span>🛣️ 62000 KM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carro 5: Subaru Forester -->
+                <div class="car-box-vertical">
+                    <div class="car-box-image">
+                        <img src="{{ url_for('static', filename='imagens/forester subar.jpg') }}" alt="Subaru Forester">
+                    </div>
+                    <div class="car-box-info">
+                        <h3>Subaru Forester</h3>
+                        <p class="price-text">A Partir De 50€ Por Dia</p>
+                        <p class="desc-text">Veículo forte e rápido. Ideal para trabalhos em longas viagens. Alugue agora.</p>
+                        <a href="{{ url_for('escolher_datas') }}?carro=Subaru Forester" class="btn-rent-red">Alugar Carro</a>
+                        <div class="meta-bottom">
+                            <span>🚗 Model 2014ib</span>
+                            <span>🛣️ 32000 KM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carro 6: Porsche -->
+                <div class="car-box-vertical">
+                    <div class="car-box-image">
+                        <img src="{{ url_for('static', filename='imagens/Porsche.jpg') }}" alt="Porsche">
+                    </div>
+                    <div class="car-box-info">
+                        <h3>Porsche</h3>
+                        <p class="price-text">A Partir De 180€ Por Dia</p>
+                        <p class="desc-text">Elegancia não tem preço; apenas momentos inesquecivéis..</p>
+                        <a href="{{ url_for('escolher_datas') }}?carro=Porsche" class="btn-rent-red">Alugar Carro</a>
+                        <div class="meta-bottom">
+                            <span>🚗 Model 2024 LTX</span>
+                            <span>🛣️ 22800 KM</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- Fecho da cars-vertical-grid -->
+        </section> <!-- Fecho da list-left-column -->
+    </main> <!-- Fecho da list-page-container -->
+
+        <!-- RODAPÉ DA PÁGINA (FOOTER) -->
+    <footer class="footer-section">
+        <div class="footer-container">
+
+            <!-- Coluna da Esquerda: Logótipo, Texto e Redes Sociais -->
+            <div class="footer-column footer-about">
+                <div class="footer-logo">
+                    <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+                </div>
+                <p>Grandes ofertas e o melhor serviço desde 1977.
+                    Obtenha seu orçamento para o aluguer de vários veículos de diversas marcas e modelos.
+                    Aluguer rápido, fácil e seguro.
+                    Apoio ao cliente em mais de 30 países.
+                    Cancelamento gratuíto</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">G+</a>
+                </div>
+            </div>
+
+            <!-- Coluna da Direita: Contactos -->
+            <div class="footer-column footer-contact">
+                <h3>Contacte-Nos</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📍</span>
+                        <p>Braga, Portugal</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">✉️</span>
+                        <p>linkedin.com/in/christian-de-oliveira-aaa44034b</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon-red">📞</span>
+                        <p>+351 933 021 041</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+</body>
+</html>

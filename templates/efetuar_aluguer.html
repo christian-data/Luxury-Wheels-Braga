@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Wheels - Efetuar Aluguer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=13">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <nav class="navbar-custom">
+        <a class="brand-logo" href="{{ url_for('login') }}">
+            <img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels">
+        </a>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('car_list') }}">Carros</a>
+            <a href="{{ url_for('login') }}">Iniciar Sessão</a>
+            <a href="{{ url_for('register') }}">Registar-se</a>
+            <a href="{{ url_for('minhas_reservas') }}">As Minhas Reservas</a>
+            <a href="{{ url_for('contacto') }}">Contacte-nos</a>
+        </div>
+    </nav>
+
+    <!-- CONTEÚDO PRINCIPAL DO ALUGUER -->
+    <main style="max-width: 800px; margin: 60px auto; padding: 0 20px; text-align: center;">
+        <div style="background: #ffffff; padding: 40px; border-radius: 4px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <h2 style="font-size: 28px; color: #111; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">Finalizar Aluguer</h2>
+            <div class="red-divider"></div>
+            <p style="color: #4a5568; font-size: 16px; margin-bottom: 20px;">
+    Confirmou o interesse no veículo: <strong style="color: #d90414;">{{ carro_selecionado }}</strong>
+</p>
+
+            <!-- FOTO DO CARRO -->
+            <div style="text-align: center; margin-bottom: 25px;">
+                {% if carro_selecionado == 'Pajero Rang' %}
+                    <img src="{{ url_for('static', filename='imagens/pajero rang.jpg') }}" style="max-height: 180px; width: auto; border-radius: 4px;">
+                {% elif carro_selecionado == 'Mirage Ranger' %}
+                    <img src="{{ url_for('static', filename='imagens/mirage range.jpg') }}" style="max-height: 180px; width: auto; border-radius: 4px;">
+                {% elif carro_selecionado == 'Volkswagen' %}
+                    <img src="{{ url_for('static', filename='imagens/Volkswagen.jpg') }}" style="max-height: 180px; width: auto; border-radius: 4px;">
+                {% elif carro_selecionado == 'Rolls-Royce' %}
+                    <img src="{{ url_for('static', filename='imagens/Rools royce.jpg') }}" style="max-height: 180px; width: auto; border-radius: 4px;">
+                {% elif carro_selecionado == 'Subaru Forester' %}
+                    <img src="{{ url_for('static', filename='imagens/forester subar.jpg') }}" style="max-height: 180px; width: auto; border-radius: 4px;">
+                {% elif carro_selecionado == 'Porsche' %}
+                    <img src="{{ url_for('static', filename='imagens/Porsche.jpg') }}" style="max-height: 180px; width: auto; border-radius: 4px;">
+                {% endif %}
+            </div>
+
+            <!-- Simulador de Confirmação Final -->
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 4px; text-align: left; margin-bottom: 30px; font-size: 14px; color: #4a5568;">
+                <p>📍 <strong>Local de Levantamento:</strong> {{ local_retirada }}</p>
+                <p>📅 <strong>Data de Levantamento:</strong> {{ data_retirada }} às {{ hora_retirada }}</p>
+                <p>🏁 <strong>Local de Entrega:</strong> {{ local_devolucao }}</p>
+                <p>📅 <strong>Data de Entrega:</strong> {{ data_devolucao }} às {{ hora_devolucao }}</p>
+
+                <!-- PREÇO CALCULADO -->
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 2px dashed #e2e8f0;">
+                    <p>📆 <strong>Número de Dias:</strong> {{ dias }} dia(s)</p>
+                    <p>💰 <strong>Preço por Dia:</strong> {{ preco_dia }}€</p>
+                    <p style="font-size: 18px; color: #d90414;">
+                        <strong>💳 Total a Pagar: {{ total }}€</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+                <a href="{{ url_for('car_list') }}" class="btn-outline-dark">Alterar Reserva</a>
+                <form action="{{ url_for('pagamento') }}" method="POST" target="_blank">
+                    <input type="hidden" name="carro" value="{{ carro_selecionado }}">
+                    <input type="hidden" name="local_retirada" value="{{ local_retirada }}">
+                    <input type="hidden" name="local_entrega" value="{{ local_devolucao }}">
+                    <input type="hidden" name="data_levantamento" value="{{ data_retirada }}">
+                    <input type="hidden" name="hora_levantamento" value="{{ hora_retirada }}">
+                    <input type="hidden" name="data_entrega" value="{{ data_devolucao }}">
+                    <input type="hidden" name="hora_entrega" value="{{ hora_devolucao }}">
+                    <input type="hidden" name="dias" value="{{ dias if dias else '' }}">
+                    <input type="hidden" name="preco_dia" value="{{ preco_dia if preco_dia else '' }}">
+                    <input type="hidden" name="total" value="{{ total if total else '' }}">
+                    <button type="submit" class="btn-vehicles" style="border: none; cursor: pointer;">Confirmar e Pagar</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="footer-section">
+        <div class="footer-container">
+            <div class="footer-column footer-about">
+                <div class="footer-logo"><img src="{{ url_for('static', filename='imagens/logo1.png') }}" alt="Luxury Wheels"></div>
+                <p>Grandes ofertas e o melhor serviço desde 1977.
+                    Obtenha seu orçamento para o aluguer de vários veículos de diversas marcas e modelos.
+                    Aluguer rápido, fácil e seguro.
+                    Apoio ao cliente em mais de 30 países.
+                    Cancelamento gratuíto</p>
+            </div>
+            <div class="footer-column footer-contact">
+                <h3>Contacte-Nos</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item"><span class="contact-icon-red">📍</span><p>Braga, Portugal</p></div>
+                    <div class="contact-item"><span class="contact-icon-red">✉️</span><p>seuwebsite@site.com</p></div>
+                    <div class="contact-item"><span class="contact-icon-red">📞</span><p>933 021 041</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
